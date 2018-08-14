@@ -89,13 +89,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         }
     }
     
-    //
+    //金幣跟炸彈Timers設定
     func startTimers(){
 
-        //
+        //金幣每1秒出現
         coinTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (timer) in
             self.createCoin()
         })
+        
+        //炸彈每3秒出現
         bombTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true, block: { (timer) in
             self.createBomb()
         })
@@ -103,7 +105,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     //點擊面板
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-
+        
         if scene?.isPaused == false {
             coinMan?.physicsBody?.applyForce(CGVector(dx: 0, dy: 40000))
         }
@@ -180,7 +182,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     func didBegin(_ contact: SKPhysicsContact) {
         
         
-        //
+        
         if contact.bodyA.categoryBitMask == coinCategory {
             contact.bodyA.node?.removeFromParent()
             score += 1
@@ -191,7 +193,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             score += 1
             scoreLabel?.text = "分數: \(score)"
         }
-        //
+        
         if contact.bodyA.categoryBitMask == bombCategory {
             contact.bodyA.node?.removeFromParent()
             gameOver()
